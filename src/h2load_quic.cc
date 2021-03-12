@@ -633,6 +633,9 @@ int Client::write_quic() {
       if (bufpos - buf.data()) {
         write_udp(ps.path.remote.addr, ps.path.remote.addrlen, buf.data(),
                   bufpos - buf.data(), quic.max_pktlen);
+/* ####################### */
+        std::cout << "########### nwrite = 0, size = " << static_cast<size_t>(bufpos - buf.data()) << ", max_pktlen = " << quic.max_pktlen << "\n";
+/* ####################### */
       }
       return 0;
     }
@@ -644,9 +647,15 @@ int Client::write_quic() {
         static_cast<size_t>(nwrite) < quic.max_pktlen) {
       write_udp(ps.path.remote.addr, ps.path.remote.addrlen, buf.data(),
                 bufpos - buf.data(), quic.max_pktlen);
+/* $$$$$$$$$$$$$$$$$$$$ */
+      std::cout << "$$$$$$$$$$$$$$$ nwrite = " << static_cast<size_t>(nwrite) << ", pktcnt = " << pktcnt << ", max_pktcnt = " << max_pktcnt << ", max_pktlen = " << quic.max_pktlen << ", size = " << static_cast<size_t>(bufpos - buf.data()) << "\n";
+/* $$$$$$$$$$$$$$$$$$$$ */
       signal_write();
       return 0;
     }
+/* ******************** */
+    std::cout << "************** pktcnt = " << pktcnt << ", nwrite = " << nwrite << "\n";
+/* ******************** */
   }
 }
 
